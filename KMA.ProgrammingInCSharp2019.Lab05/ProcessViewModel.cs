@@ -74,26 +74,21 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-        //public RelayCommand<object> Terminate
-        //{
-        //    get
-        //    {
-        //        return _terminate ?? (_terminate = new RelayCommand<object>(
-        //                   SignInInplementation, o => CanExecuteCommand()));
-        //    }
-        //}
+        public RelayCommand<object> Terminate
+        {
+            get
+            {
+                return _terminate ?? (_terminate = new RelayCommand<object>(
+                           TerminateImplementation, o => CanExecuteCommand()));
+            }
+        }
 
         public RelayCommand<Object> OpenFolder
         {
             get
             {
-                return _openFolder ?? ((_openFolder) = new RelayCommand<object>(
-                           o =>
-                           {
-                               MessageBox.Show("1");
-
-
-                           },o => CanExecuteCommand()));
+                return _openFolder ?? (_openFolder= new RelayCommand<object>(
+                           OpenFolderImplementation,o => CanExecuteCommand()));
             }
         }
 
@@ -119,7 +114,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         {
             if (SelectedProcess.Path != "Not available")
             {
-                Process.Start(SelectedProcess.Path);
+                System.Diagnostics.Process.Start("explorer", SelectedProcess.Path.Substring(0,SelectedProcess.Path.LastIndexOf("\\")));
+
             }
             else
             {

@@ -16,7 +16,7 @@
 
         <DataGrid x:Name="General" Grid.Row="0"  IsReadOnly="True" AutoGenerateColumns="False" 
                       ItemsSource="{Binding Processes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding SelectedProcess, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Height="360">
+                      SelectedItem="{Binding SelectedProcess, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Height="360" CanUserSortColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" />

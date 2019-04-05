@@ -93,8 +93,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get
             {
-                if (_modules == null)
-                    RefreshModules();
+                RefreshModules();
                 return _modules;
             }
         }
@@ -105,8 +104,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get
             {
-                if (_threads == null)
-                    RefreshThreads();
+                RefreshThreads();
                 return _threads;
             }
         }

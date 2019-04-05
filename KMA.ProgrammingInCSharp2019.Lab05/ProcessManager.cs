@@ -29,12 +29,41 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 
         internal static void Refresh()
         {
+            CurrentProcess current;
             foreach (var process in Process.GetProcesses())
             {
                 if (process != null)
-                    if(!_processesList.Contains(new CurrentProcess(process)))
-                    _processesList.Add(new CurrentProcess(process));
+                {
+                    if (!Contains(new CurrentProcess(process)))
+                        _processesList.Add(new CurrentProcess(process));
+                }
+                    
             }
+
+            Sort();
+        }
+
+        private static bool Contains(CurrentProcess current)
+        {
+            foreach (var process in _processesList)
+            {
+                if (process.Id == current.Id)
+                    return true;
+            }
+
+
+
+            return false;
+        }
+
+        private static void Sort()
+        {
+            var result =
+                from currentProcess in _processesList
+                orderby currentProcess.Name
+                select currentProcess;
+
+            _processesList = result.ToList();
         }
 
         internal static void CloseApp()
