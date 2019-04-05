@@ -1,0 +1,59 @@
+﻿<Window x:Class="KMA.ProgrammingInCSharp2019.Lab05.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ProcessesList" Height="460" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Terminate" Command="{Binding Terminate}"/>
+        <Button Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Open folder" Command="{Binding OpenFolder}"/>
+
+        <DataGrid x:Name="General" Grid.Row="0"  IsReadOnly="True" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Processes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedProcess, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Height="360">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Active" Binding="{Binding IsActive}" />
+                <DataGridTextColumn Header="CPU usage" Binding="{Binding CPU}" />
+                <DataGridTextColumn Header="Memory usage" Binding="{Binding MemoryUsage}" />
+                <DataGridTextColumn Header="Threads count" Binding="{Binding ThreadsCount}" />
+                <DataGridTextColumn Header="User" Binding="{Binding User}" />
+                <DataGridTextColumn Header="Path" Binding="{Binding Path}" />
+                <DataGridTextColumn Header="Launch time" Binding="{Binding LaunchTime}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row ="0" Margin="5" Content="Modules"/>
+
+                            <DataGrid x:Name="ProcessModules" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="True"
+                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            </DataGrid>
+
+                            <Label Grid.Row ="2"  Margin="5" Content="Threads"/>
+
+                            <DataGrid x:Name="ProcessThreads" Grid.Row="3"  IsReadOnly="True" AutoGenerateColumns="True"
+                                          ItemsSource="{Binding Threads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </Grid>
+</Window>

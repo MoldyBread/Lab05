@@ -1,0 +1,14 @@
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\bin\Debug\KMA.ProgrammingInCSharp2019.Lab05.exe.config
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\bin\Debug\KMA.ProgrammingInCSharp2019.Lab05.exe
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\bin\Debug\KMA.ProgrammingInCSharp2019.Lab05.pdb
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.csprojAssemblyReference.cache
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\App.g.cs
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05_MarkupCompile.cache
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.g.resources
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.Properties.Resources.resources
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.csproj.GenerateResource.cache
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.csproj.CoreCompileInputs.cache
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.exe
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.pdb
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\ProcessControl.baml
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\ProcessControl.g.cs

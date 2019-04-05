@@ -1,0 +1,9 @@
+﻿<Application x:Class="KMA.ProgrammingInCSharp2019.Lab05.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:KMA.ProgrammingInCSharp2019.Lab05"
+             StartupUri="ProcessControl.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
