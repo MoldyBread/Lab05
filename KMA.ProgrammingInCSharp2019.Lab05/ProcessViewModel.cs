@@ -47,6 +47,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
+       
+
         private Thread _workingThread;
 
         internal ProcessViewModel()
@@ -147,11 +149,11 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-        public async void SortImplementation(object obj)
+        public void SortImplementation(object obj)
         {
             //TODO: Make show loader
            ProcessManager.SortCategory=SortEntry.Substring(SortEntry.LastIndexOf(":") + 2);
-           await Task.Run(() => ProcessManager.Refresh());
+           ProcessManager.Refresh();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,3 +12,6 @@ D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.Programming
 D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.pdb
 D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\ProcessControl.baml
 D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\ProcessControl.g.cs
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\bin\Debug\FontAwesome.WPF.dll
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\bin\Debug\FontAwesome.WPF.xml
+D:\STUDIES\♡CsharpLUBIMIY♡\KMA.ProgrammingInCSharp2019.Lab05\KMA.ProgrammingInCSharp2019.Lab05\obj\Debug\KMA.ProgrammingInCSharp2019.Lab05.csproj.CopyComplete

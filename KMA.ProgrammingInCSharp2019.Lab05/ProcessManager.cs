@@ -39,6 +39,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         internal static void Refresh()
         {
             CurrentProcess current;
+            Sort();
             foreach (var process in Process.GetProcesses())
             {
                 if (process != null)
@@ -48,6 +49,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 }
                     
             }
+
             Sort();
 
 
@@ -77,9 +79,10 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                        (from currentProcess in _processesList
                         orderby currentProcess.Name
                         select currentProcess).ToList();
+
                 }
 
-                if (_sortCategory == "Id")
+                else if (_sortCategory == "Id")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -87,7 +90,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "Active")
+                else if(_sortCategory == "Active")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -95,7 +98,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "CPU usage")
+                else if(_sortCategory == "CPU usage")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -103,7 +106,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "Memory usage")
+                else if(_sortCategory == "Memory usage")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -111,7 +114,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "Threads count")
+                else if(_sortCategory == "Threads count")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -119,7 +122,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "User")
+                else if(_sortCategory == "User")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -127,7 +130,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "Path")
+                else if(_sortCategory == "Path")
                 {
                     _processesList =
                         (from currentProcess in _processesList
@@ -135,7 +138,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                             select currentProcess).ToList();
                 }
 
-                if (_sortCategory == "Launch time")
+                else if(_sortCategory == "Launch time")
                 {
                     _processesList =
                         (from currentProcess in _processesList
