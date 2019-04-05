@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using KMA.ProgrammingInCSharp2019.Lab05.Processes;
 
 namespace KMA.ProgrammingInCSharp2019.Lab05
@@ -35,10 +32,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             Refresh();
         }
 
-
         internal static void Refresh()
         {
-            CurrentProcess current;
             Sort();
             foreach (var process in Process.GetProcesses())
             {
@@ -49,11 +44,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 }
                     
             }
-
             Sort();
-
-
-
         }
 
         private static bool Contains(CurrentProcess current)
@@ -63,8 +54,6 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 if (process.Id == current.Id)
                     return true;
             }
-
-
 
             return false;
         }

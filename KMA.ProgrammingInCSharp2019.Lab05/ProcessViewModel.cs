@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using KMA.ProgrammingInCSharp2019.Lab05.Processes;
 
 namespace KMA.ProgrammingInCSharp2019.Lab05
@@ -17,13 +13,18 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
     {
         private string _sortEntry;
 
+        private Visibility _loaderVisibility = Visibility.Hidden;
+        private Visibility _dataGridVisibility = Visibility.Visible;
+
         private RelayCommand<object> _terminate;
         private RelayCommand<object> _openFolder;
         private RelayCommand<object> _sort;
 
+        private Thread _workingThread;
+
         private ObservableCollection<CurrentProcess> _processes;
-        private CancellationToken _token;
-        private CancellationTokenSource _tokenSource;
+        private readonly CancellationToken _token;
+        private readonly CancellationTokenSource _tokenSource;
 
         public CurrentProcess SelectedProcess { get;set; }
 
@@ -47,9 +48,28 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-       
+        public Visibility LoaderVisibility
+        {
+            get { return _loaderVisibility; }
+            set
+            {
+                _loaderVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
-        private Thread _workingThread;
+        public Visibility DataGridVisibility
+        {
+            get { return _dataGridVisibility; }
+            set
+            {
+                _dataGridVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        
 
         internal ProcessViewModel()
         {
@@ -69,7 +89,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         private void StopWorkingThread()
         {
             _tokenSource.Cancel();
-            _workingThread.Join(2000);
+            _workingThread.Join(100);
             _workingThread.Abort();
             _workingThread = null;
         }
@@ -83,10 +103,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 ProcessManager.Refresh();
                 if (_token.IsCancellationRequested)
                     break;
-                else
-                {
-                    Processes=new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
-                }
+
+                Processes=new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
                 
             }
         }
@@ -123,12 +141,11 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             return SelectedProcess != null;
         }
 
-        public void TerminateImplementation(object obj)
+        private void TerminateImplementation(object obj)
         {
             if (SelectedProcess.Path != "Not available")
             {
                 SelectedProcess.Terminate();
-                ProcessManager.Refresh();
             }
             else
             {
@@ -136,12 +153,11 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-        public void OpenFolderImplementation(object obj)
+        private void OpenFolderImplementation(object obj)
         {
             if (SelectedProcess.Path != "Not available")
             {
-                System.Diagnostics.Process.Start("explorer", SelectedProcess.Path.Substring(0,SelectedProcess.Path.LastIndexOf("\\")));
-
+                System.Diagnostics.Process.Start("explorer", SelectedProcess.Path.Substring(0,SelectedProcess.Path.LastIndexOf("\\", StringComparison.Ordinal)));
             }
             else
             {
@@ -149,13 +165,24 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-        public void SortImplementation(object obj)
+        private async void SortImplementation(object obj)
         {
-            //TODO: Make show loader
-           ProcessManager.SortCategory=SortEntry.Substring(SortEntry.LastIndexOf(":") + 2);
-           ProcessManager.Refresh();
+            LoaderVisibility = Visibility.Visible;
+            DataGridVisibility = Visibility.Hidden;
+            ProcessManager.SortCategory = SortEntry.Substring(SortEntry.LastIndexOf(":", StringComparison.Ordinal) + 2);
+            await Task.Run(() => Update(), _token);
+            LoaderVisibility = Visibility.Hidden;
+            DataGridVisibility = Visibility.Visible;
+        }
+  
+
+        private void Update()
+        {
+            ProcessManager.Refresh();
+            Processes = new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
         }
 
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

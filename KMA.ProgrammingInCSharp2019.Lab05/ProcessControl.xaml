@@ -41,8 +41,9 @@
         <Button Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Open folder" Command="{Binding OpenFolder}"/>
         <Button Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Terminate" Command="{Binding Terminate}"/>
 
+        <fa:ImageAwesome Grid.Row="1" Icon="Refresh" Width="50" Height="50" Spin="True" Margin="15 15 15 5" Visibility="{Binding LoaderVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></fa:ImageAwesome>
 
-        <DataGrid x:Name="General" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" 
+        <DataGrid x:Name="General" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" Visibility="{Binding DataGridVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{Binding Processes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding SelectedProcess, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Height="360" CanUserSortColumns="False">
             <DataGrid.Columns>
@@ -72,7 +73,7 @@
                             <Label Grid.Row ="0" Grid.Column="0" Margin="5" Content="Modules"/>
 
                             <DataGrid x:Name="ProcessModules" Grid.Row="1" Grid.Column="0" IsReadOnly="True" AutoGenerateColumns="True"
-                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150">
+                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150" Width="500">
                             </DataGrid>
 
                             <Label Grid.Row ="0"  Grid.Column="1" Margin="5" Content="Threads"/>

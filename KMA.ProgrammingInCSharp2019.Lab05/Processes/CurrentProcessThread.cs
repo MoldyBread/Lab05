@@ -26,7 +26,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 
         internal CurrentProcessThread(ProcessThread thread)
         {
-            this._thread = thread;
+            _thread = thread;
         }
     }
 }

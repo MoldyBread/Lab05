@@ -22,7 +22,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 
         internal CurrentProcessModule(ProcessModule module)
         {
-            this._module = module;
+            _module = module;
         }
     }
 }

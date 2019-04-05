@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 
 namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 {
     class CurrentProcess
     {
+        private readonly CancellationToken _token;
+        private readonly CancellationTokenSource _tokenSource;
+
+        private Thread _workingThread;
+
         private readonly Process _process;
 
         public string Name
@@ -55,7 +61,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
                 {
                     return _process.MainModule.FileName;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return "Not available";
                 }
@@ -70,7 +76,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
                 {
                     return _process.StartTime.ToString(CultureInfo.InvariantCulture);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return "Not available";
                 }
@@ -80,6 +86,10 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         internal CurrentProcess(Process process)
         {
                 _process = process;
+                _tokenSource = new CancellationTokenSource();
+                _token = _tokenSource.Token;
+                StartWorkingThread();
+                ProcessManager.StopThreads += StopWorkingThread;
         }
 
         public void Terminate()
@@ -93,10 +103,12 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get
             {
-                RefreshModules();
+                //RefreshModules();
                 return _modules;
             }
         }
+
+
 
         private HashSet<CurrentProcessThread> _threads;
 
@@ -104,7 +116,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get
             {
-                RefreshThreads();
+                //RefreshThreads();
                 return _threads;
             }
         }
@@ -126,6 +138,34 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
             foreach (ProcessThread t in _process.Threads)
             {
                 _threads.Add(new CurrentProcessThread(t));
+            }
+        }
+
+        private void StartWorkingThread()
+        {
+            _workingThread = new Thread(WorkingThreadProcess);
+            _workingThread.Start();
+        }
+
+        private void StopWorkingThread()
+        {
+            _tokenSource.Cancel();
+            _workingThread.Join(100);
+            _workingThread.Abort();
+            _workingThread = null;
+        }
+
+        private void WorkingThreadProcess()
+        {
+            while (!_token.IsCancellationRequested)
+            {
+               
+                RefreshModules();
+                RefreshThreads();
+                if (_token.IsCancellationRequested)
+                    break;
+
+                Thread.Sleep(2000);
             }
         }
 
