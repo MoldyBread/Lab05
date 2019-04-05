@@ -35,7 +35,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         internal static void Refresh()
         {
             Sort();
-            foreach (var process in Process.GetProcesses())
+            Process[] processes = Process.GetProcesses();
+            foreach (var process in processes)
             {
                 if (process != null)
                 {

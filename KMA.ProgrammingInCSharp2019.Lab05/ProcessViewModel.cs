@@ -40,7 +40,10 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 
         public ObservableCollection<CurrentProcess> Processes
         {
-            get => _processes;
+            get
+            {
+                return _processes;
+            }
             private set
             {
                 _processes = value;
@@ -98,9 +101,9 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         {
             while (!_token.IsCancellationRequested)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000); 
                 
-                ProcessManager.Refresh();
+                ProcessManager.Refresh(); //Processes updated with metas automatically
                 if (_token.IsCancellationRequested)
                     break;
 
