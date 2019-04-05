@@ -4,17 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="ProcessesList" Height="460" Width="800">
+        Title="ProcessesList" Height="530" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Terminate" Command="{Binding Terminate}"/>
-        <Button Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Open folder" Command="{Binding OpenFolder}"/>
 
-        <DataGrid x:Name="General" Grid.Row="0"  IsReadOnly="True" AutoGenerateColumns="False" 
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row ="0" Margin="5" Content="Sort by:"/>
+            <ComboBox Grid.Row ="0" Grid.Column="1" Margin="5" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedValue="{Binding SortEntry, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                <Label>Name</Label>
+                <Label>Id</Label>
+                <Label>Active</Label>
+                <Label>CPU usage</Label>
+                <Label>Memory usage</Label>
+                <Label>Threads count</Label>
+                <Label>User</Label>
+                <Label>Path</Label>
+                <Label>Launch time</Label>
+            </ComboBox>
+            <Button Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Sort" Command="{Binding Sort}"/>
+
+        </Grid>
+        <Button Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Open folder" Command="{Binding OpenFolder}"/>
+        <Button Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Content="Terminate" Command="{Binding Terminate}"/>
+
+
+        <DataGrid x:Name="General" Grid.Row="1"  IsReadOnly="True" AutoGenerateColumns="False" 
                       ItemsSource="{Binding Processes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding SelectedProcess, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Height="360" CanUserSortColumns="False">
             <DataGrid.Columns>
@@ -35,20 +62,22 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                                </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row ="0" Margin="5" Content="Modules"/>
+                            <Label Grid.Row ="0" Grid.Column="0" Margin="5" Content="Modules"/>
 
-                            <DataGrid x:Name="ProcessModules" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="True"
-                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGrid x:Name="ProcessModules" Grid.Row="1" Grid.Column="0" IsReadOnly="True" AutoGenerateColumns="True"
+                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150">
                             </DataGrid>
 
-                            <Label Grid.Row ="2"  Margin="5" Content="Threads"/>
+                            <Label Grid.Row ="0"  Grid.Column="1" Margin="5" Content="Threads"/>
 
-                            <DataGrid x:Name="ProcessThreads" Grid.Row="3"  IsReadOnly="True" AutoGenerateColumns="True"
-                                          ItemsSource="{Binding Threads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGrid x:Name="ProcessThreads" Grid.Row="1" Grid.Column="1"  IsReadOnly="True" AutoGenerateColumns="True"
+                                          ItemsSource="{Binding Threads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150">
                             </DataGrid>
                         </Grid>
                     </Border>

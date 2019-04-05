@@ -6,21 +6,36 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using KMA.ProgrammingInCSharp2019.Lab05.Processes;
 
 namespace KMA.ProgrammingInCSharp2019.Lab05
 {
     class ProcessViewModel : INotifyPropertyChanged
     {
+        private string _sortEntry;
+
         private RelayCommand<object> _terminate;
         private RelayCommand<object> _openFolder;
+        private RelayCommand<object> _sort;
 
         private ObservableCollection<CurrentProcess> _processes;
         private CancellationToken _token;
         private CancellationTokenSource _tokenSource;
 
         public CurrentProcess SelectedProcess { get;set; }
+
+        public string SortEntry
+        {
+            get { return _sortEntry; }
+            set
+            {
+                _sortEntry = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<CurrentProcess> Processes
         {
@@ -74,6 +89,15 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
+        public RelayCommand<object> Sort
+        {
+            get
+            {
+                return _sort ?? (_sort = new RelayCommand<object>(
+                           SortImplementation));
+            }
+        }
+
         public RelayCommand<object> Terminate
         {
             get
@@ -121,6 +145,13 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             {
                 MessageBox.Show("Can`t commit this");
             }
+        }
+
+        public async void SortImplementation(object obj)
+        {
+            //TODO: Make show loader
+           ProcessManager.SortCategory=SortEntry.Substring(SortEntry.LastIndexOf(":") + 2);
+           await Task.Run(() => ProcessManager.Refresh());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

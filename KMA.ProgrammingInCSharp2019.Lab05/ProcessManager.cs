@@ -11,6 +11,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 {
     internal static class ProcessManager
     {
+        private static string _sortCategory;
+
         public static event Action StopThreads;
 
         private static List<CurrentProcess> _processesList;
@@ -20,9 +22,16 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             get { return _processesList; }
         }
 
+        internal static string SortCategory
+        {
+            get { return _sortCategory;}
+            set { _sortCategory = value; }
+        }
+
         internal static void Initialize()
         {
             _processesList = new List<CurrentProcess>();
+            _sortCategory = "Name";
             Refresh();
         }
 
@@ -39,8 +48,10 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 }
                     
             }
-
             Sort();
+
+
+
         }
 
         private static bool Contains(CurrentProcess current)
@@ -58,17 +69,86 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 
         private static void Sort()
         {
-            var result =
-                from currentProcess in _processesList
-                orderby currentProcess.Name
-                select currentProcess;
+            if (_sortCategory != "")
+            {
+                if (_sortCategory == "Name")
+                {
+                    _processesList =
+                       (from currentProcess in _processesList
+                        orderby currentProcess.Name
+                        select currentProcess).ToList();
+                }
 
-            _processesList = result.ToList();
+                if (_sortCategory == "Id")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.Id
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "Active")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.IsActive
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "CPU usage")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.CPU
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "Memory usage")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.MemoryUsage
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "Threads count")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.ThreadsCount
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "User")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.User
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "Path")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.Path
+                            select currentProcess).ToList();
+                }
+
+                if (_sortCategory == "Launch time")
+                {
+                    _processesList =
+                        (from currentProcess in _processesList
+                            orderby currentProcess.LaunchTime
+                            select currentProcess).ToList();
+                }
+
+            }
+            
         }
 
         internal static void CloseApp()
         {
-            MessageBox.Show("Shutting down");
             StopThreads?.Invoke();
             Environment.Exit(1);
         }
