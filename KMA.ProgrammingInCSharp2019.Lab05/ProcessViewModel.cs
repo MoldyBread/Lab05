@@ -20,7 +20,10 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
         private RelayCommand<object> _openFolder;
         private RelayCommand<object> _sort;
 
-        private Thread _workingThread;
+        private Thread _workingThread1;
+        private Thread _workingThread2;
+
+
 
         private ObservableCollection<CurrentProcess> _processes;
         private readonly CancellationToken _token;
@@ -85,30 +88,50 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 
         private void StartWorkingThread()
         {
-            _workingThread = new Thread(WorkingThreadProcess);
-            _workingThread.Start();
+            _workingThread1 = new Thread(WorkingThreadProcess1);
+            _workingThread1.Start();
+            _workingThread2 = new Thread(WorkingThreadProcess2);
+            _workingThread2.Start();
         }
 
         private void StopWorkingThread()
         {
             _tokenSource.Cancel();
-            _workingThread.Join(100);
-            _workingThread.Abort();
-            _workingThread = null;
+            _workingThread1.Join(100);
+            _workingThread1.Abort();
+            _workingThread1 = null;
+            _workingThread2.Join(100);
+            _workingThread2.Abort();
+            _workingThread2 = null;
         }
 
-        private void WorkingThreadProcess()
+        private void WorkingThreadProcess1()
         {
             while (!_token.IsCancellationRequested)
             {
-                Thread.Sleep(2000); 
+                Thread.Sleep(5000); 
                 
-                ProcessManager.Refresh(); //Processes updated with metas automatically
+                ProcessManager.Refresh(); 
                 if (_token.IsCancellationRequested)
                     break;
 
                 Processes=new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
                 
+            }
+        }
+
+        private void WorkingThreadProcess2()
+        {
+            while (!_token.IsCancellationRequested)
+            {
+                Thread.Sleep(2000);
+
+                ProcessManager.RefreshMeta();
+                if (_token.IsCancellationRequested)
+                    break;
+
+                Processes = new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
+
             }
         }
 
@@ -173,13 +196,13 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             LoaderVisibility = Visibility.Visible;
             DataGridVisibility = Visibility.Hidden;
             ProcessManager.SortCategory = SortEntry.Substring(SortEntry.LastIndexOf(":", StringComparison.Ordinal) + 2);
-            await Task.Run(() => Update(), _token);
+            await Task.Run(() => UpdateList(), _token);
             LoaderVisibility = Visibility.Hidden;
             DataGridVisibility = Visibility.Visible;
         }
   
 
-        private void Update()
+        private void UpdateList()
         {
             ProcessManager.Refresh();
             Processes = new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);

@@ -19,9 +19,20 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get { return _thread.ThreadState; }
         }
-        public DateTime LaunchTime
+        public String LaunchTime
         {
-            get { return _thread.StartTime; }
+            get
+            {
+                try
+                {
+                    return _thread.StartTime.ToString();
+                }
+                catch (Exception)
+                {
+                    return "Not available";
+                }
+                
+            }
         }
 
         internal CurrentProcessThread(ProcessThread thread)

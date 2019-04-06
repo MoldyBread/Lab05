@@ -30,22 +30,38 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             _processesList = new List<CurrentProcess>();
             _sortCategory = "Name";
             Refresh();
+            RefreshMeta();
         }
 
         internal static void Refresh()
         {
-            Sort();
             Process[] processes = Process.GetProcesses();
             foreach (var process in processes)
             {
                 if (process != null)
                 {
-                    if (!Contains(new CurrentProcess(process)))
-                        _processesList.Add(new CurrentProcess(process));
+                    try
+                    {
+                        if (!Contains(new CurrentProcess(process)))
+                            _processesList.Add(new CurrentProcess(process));
+                    }
+                    catch (Exception e)
+                    {
+                        Refresh();
+                    }
+                    
                 }
                     
             }
             Sort();
+        }
+
+        internal static void RefreshMeta()
+        {
+            foreach (var process in _processesList)
+            {
+                process.RefreshMetaData();
+            }
         }
 
         private static bool Contains(CurrentProcess current)

@@ -8,6 +8,14 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
     class CurrentProcess
     {
 
+        private float _cpu;
+        private long _memoryUsage;
+        private int _threadsCount;
+
+        private readonly PerformanceCounter _cpuCount;
+        private readonly PerformanceCounter _ramInMBCount;
+
+
         private readonly Process _process;
 
         public string Name
@@ -29,18 +37,20 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             get
             {
-                PerformanceCounter performance = new PerformanceCounter("Process", "% Processor Time",_process.ProcessName);
-                return performance.NextValue() / 100;
+                return _cpu;
             }
+            set { _cpu = value; }
         }
         public long MemoryUsage
         {
-            get { return _process.PrivateMemorySize64 / 1024; }
+            get { return _memoryUsage; }
+            set { _memoryUsage = value; }
         }
 
         public int ThreadsCount
         {
-            get { return _process.Threads.Count; }
+            get { return _threadsCount; }
+            set { _threadsCount = value; }
         }
 
         public string User
@@ -81,7 +91,13 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         internal CurrentProcess(Process process)
         {
                 _process = process;
-                
+            //ThreadsCount = _process.Threads.Count;
+            //MemoryUsage = _process.PrivateMemorySize64 / 1024;
+            //PerformanceCounter performance = new PerformanceCounter("Process", "% Processor Time", _process.ProcessName);
+            //CPU=performance.NextValue() / 100;
+            _cpuCount = new PerformanceCounter("Process", "% Processor Time", Name, true);
+            _ramInMBCount = new PerformanceCounter("Process", "Working Set", Name, true);
+            RefreshMetaData();
         }
 
         public void Terminate()
@@ -117,12 +133,20 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             if (_modules == null)
                 _modules = new HashSet<CurrentProcessModule>();
-            
-            ProcessModuleCollection processModules = _process.Modules;
-            for (int i = 0; i < processModules.Count; i++)
+
+            try
             {
-                _modules.Add(new CurrentProcessModule(processModules[i]));
+                ProcessModuleCollection processModules = _process.Modules;
+                for (int i = 0; i < processModules.Count; i++)
+                {
+                    _modules.Add(new CurrentProcessModule(processModules[i]));
+                }
             }
+            catch (Exception)
+            {
+            }
+            
+            
         }
 
         private void RefreshThreads()
@@ -135,7 +159,27 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
             }
         }
 
-       
 
+
+        internal void RefreshMetaData()
+        {
+            try
+            {
+                CPU = _cpuCount.NextValue() / Environment.ProcessorCount;
+            }
+            catch (InvalidOperationException) { }
+
+            try
+            {
+                MemoryUsage = Convert.ToInt32(_ramInMBCount.NextValue()) / (1024 * 1024);
+            }
+            catch (InvalidOperationException) { }
+            try
+            {
+                ThreadsCount = Process.GetProcessById(Id).Threads.Count;
+            }
+            catch (Exception) { }
+
+        }
     }
 }
