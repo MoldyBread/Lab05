@@ -188,7 +188,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
                 OpenProcessToken(process.Handle, 8, out processHandle);
                 WindowsIdentity wi = new WindowsIdentity(processHandle);
                 string user = wi.Name;
-                return user.Contains(@"\") ? user.Substring(user.IndexOf(@"\") + 1) : user;
+                return user.Contains(@"\") ? user.Substring(user.IndexOf(@"\", StringComparison.Ordinal) + 1) : user;
             }
             catch
             {
@@ -204,7 +204,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         }
 
         [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+        private static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool CloseHandle(IntPtr hObject);
