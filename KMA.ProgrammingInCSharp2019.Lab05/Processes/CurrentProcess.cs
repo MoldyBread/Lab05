@@ -165,13 +165,13 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
             {
                 CPU = _cpuPerformance.NextValue() / Environment.ProcessorCount;
             }
-            catch (InvalidOperationException) { }
+            catch (Exception) { }
 
             try
             {
                 MemoryUsage = Convert.ToInt32(_ramPerformance.NextValue()) / (1024 * 1024);
             }
-            catch (InvalidOperationException) { }
+            catch (Exception) { }
             try
             {
                 ThreadsCount = Process.GetProcessById(Id).Threads.Count;
