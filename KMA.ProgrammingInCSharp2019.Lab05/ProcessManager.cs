@@ -64,6 +64,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 {
                     process.RefreshMetaData();
                 }
+
+                Sort();
             }
             catch (Exception) { }
             
@@ -105,7 +107,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 {
                     _processesList =
                         (from currentProcess in _processesList
-                            orderby currentProcess.IsActive
+                            orderby currentProcess.IsActive 
                             select currentProcess).ToList();
                 }
 
@@ -113,7 +115,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 {
                     _processesList =
                         (from currentProcess in _processesList
-                            orderby currentProcess.CPU
+                            orderby currentProcess.CPU  descending 
                             select currentProcess).ToList();
                 }
 
@@ -121,7 +123,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
                 {
                     _processesList =
                         (from currentProcess in _processesList
-                            orderby currentProcess.MemoryUsage
+                            orderby currentProcess.MemoryUsage descending 
                             select currentProcess).ToList();
                 }
 

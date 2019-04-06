@@ -73,12 +73,12 @@
                             <Label Grid.Row ="0" Grid.Column="0" Margin="5" Content="Modules"/>
 
                             <DataGrid x:Name="ProcessModules" Grid.Row="1" Grid.Column="0" IsReadOnly="True" AutoGenerateColumns="True" HorizontalAlignment="Left"
-                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150" >
+                                          ItemsSource="{Binding Modules, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150" CanUserSortColumns="False" MaxColumnWidth="150" >
                             </DataGrid>
 
                             <Label Grid.Row ="0"  Grid.Column="1" Margin="5" Content="Threads"/>
 
-                            <DataGrid x:Name="ProcessThreads" Grid.Row="1" Grid.Column="1"  IsReadOnly="True" AutoGenerateColumns="True"
+                            <DataGrid x:Name="ProcessThreads" Grid.Row="1" Grid.Column="1"  IsReadOnly="True" AutoGenerateColumns="True" CanUserSortColumns="False"
                                           ItemsSource="{Binding Threads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="150" HorizontalAlignment="Left" >
                             </DataGrid>
                         </Grid>

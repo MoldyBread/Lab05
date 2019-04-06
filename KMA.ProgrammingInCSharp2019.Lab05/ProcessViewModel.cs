@@ -74,9 +74,6 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
             }
         }
 
-
-        
-
         internal ProcessViewModel()
         {
             _processes =new ObservableCollection<CurrentProcess>(ProcessManager.ProcessesList);
