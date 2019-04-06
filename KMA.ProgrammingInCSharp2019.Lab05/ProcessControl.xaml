@@ -54,7 +54,7 @@
                 <DataGridTextColumn Header="Memory usage" Binding="{Binding MemoryUsage}" />
                 <DataGridTextColumn Header="Threads count" Binding="{Binding ThreadsCount}" />
                 <DataGridTextColumn Header="User" Binding="{Binding User}" />
-                <DataGridTextColumn Header="Path" Binding="{Binding Path}" />
+                <DataGridTextColumn Header="Path" Binding="{Binding Path}" MaxWidth="150"/>
                 <DataGridTextColumn Header="Launch time" Binding="{Binding LaunchTime}" />
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>

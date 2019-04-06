@@ -58,10 +58,15 @@ namespace KMA.ProgrammingInCSharp2019.Lab05
 
         internal static void RefreshMeta()
         {
-            foreach (var process in _processesList)
+            try
             {
-                process.RefreshMetaData();
+                foreach (var process in _processesList)
+                {
+                    process.RefreshMetaData();
+                }
             }
+            catch (Exception) { }
+            
         }
 
         private static bool Contains(CurrentProcess current)

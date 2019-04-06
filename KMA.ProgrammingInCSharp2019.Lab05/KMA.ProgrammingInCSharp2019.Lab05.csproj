@@ -63,7 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MemoryTranslator.cs" />
     <Compile Include="Processes\CurrentProcess.cs" />
     <Compile Include="Processes\CurrentProcessModule.cs" />
     <Compile Include="Processes\CurrentProcessThread.cs" />

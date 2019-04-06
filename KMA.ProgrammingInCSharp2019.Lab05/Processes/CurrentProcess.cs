@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 {
@@ -12,8 +14,8 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         private long _memoryUsage;
         private int _threadsCount;
 
-        private readonly PerformanceCounter _cpuCount;
-        private readonly PerformanceCounter _ramInMBCount;
+        private readonly PerformanceCounter _cpuPerformance;
+        private readonly PerformanceCounter _ramPerformance;
 
 
         private readonly Process _process;
@@ -55,7 +57,7 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 
         public string User
         {
-            get { return _process.MachineName; }
+            get { return GetProcessUser(_process); }
         }
 
         public string Path
@@ -90,13 +92,9 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
 
         internal CurrentProcess(Process process)
         {
-                _process = process;
-            //ThreadsCount = _process.Threads.Count;
-            //MemoryUsage = _process.PrivateMemorySize64 / 1024;
-            //PerformanceCounter performance = new PerformanceCounter("Process", "% Processor Time", _process.ProcessName);
-            //CPU=performance.NextValue() / 100;
-            _cpuCount = new PerformanceCounter("Process", "% Processor Time", Name, true);
-            _ramInMBCount = new PerformanceCounter("Process", "Working Set", Name, true);
+            _process = process;
+            _cpuPerformance = new PerformanceCounter("Process", "% Processor Time", Name, true);
+            _ramPerformance = new PerformanceCounter("Process", "Working Set", Name, true);
             RefreshMetaData();
         }
 
@@ -165,13 +163,13 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
         {
             try
             {
-                CPU = _cpuCount.NextValue() / Environment.ProcessorCount;
+                CPU = _cpuPerformance.NextValue() / Environment.ProcessorCount;
             }
             catch (InvalidOperationException) { }
 
             try
             {
-                MemoryUsage = Convert.ToInt32(_ramInMBCount.NextValue()) / (1024 * 1024);
+                MemoryUsage = Convert.ToInt32(_ramPerformance.NextValue()) / (1024 * 1024);
             }
             catch (InvalidOperationException) { }
             try
@@ -181,5 +179,34 @@ namespace KMA.ProgrammingInCSharp2019.Lab05.Processes
             catch (Exception) { }
 
         }
+
+        private static string GetProcessUser(Process process)
+        {
+            IntPtr processHandle = IntPtr.Zero;
+            try
+            {
+                OpenProcessToken(process.Handle, 8, out processHandle);
+                WindowsIdentity wi = new WindowsIdentity(processHandle);
+                string user = wi.Name;
+                return user.Contains(@"\") ? user.Substring(user.IndexOf(@"\") + 1) : user;
+            }
+            catch
+            {
+                return "Not available";
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero)
+                {
+                    CloseHandle(processHandle);
+                }
+            }
+        }
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool CloseHandle(IntPtr hObject);
     }
 }
